@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# -*- author: lzw5399 -*-
 import os
 import sys
 
@@ -13,18 +14,21 @@ main_dir = os.path.split(os.path.realpath(__file__))[0]
 yaml_path = os.path.join(main_dir, "appsettings.yaml")
 
 # 添加环境变量用以测试
-os.environ["name"] = "yttewqwwwwwwwwer"
-os.environ["main__sha"] = "sha_ya_ni"
+os.environ["app_prop"] = "yttewqwwwwwwwwer"
+os.environ["app_first__subv"] = "sha_ya_dssni"
+os.environ["app_first__sub_tree__third"] = "ffffffffffffff"
 os.environ["main__sub__third"] = "True"
 os.environ["hobby[0]"] = "True"
 
 
 def gen_env_key(current, dependencies):
     if dependencies is None:
-        dependencies = [current]
+        dependencies = []
+
+    if '__'.join(dependencies) == '':
+        return '{}_{}'.format(PREFIX, current).lstrip('_')
     else:
-        dependencies.append(current)
-    return '{}_{}'.format(PREFIX, '__'.join(dependencies)).lstrip('_')
+        return '{}_{}__{}'.format(PREFIX, '__'.join(dependencies), current).lstrip('_')
 
 
 scalar_list = [str, bool, int, float, None]
@@ -36,18 +40,31 @@ def is_scalar(t):
 
 # load setting from env recursively
 def load_env_to_content(content, level=0, dependencies=None):
-    if dependencies is None:
-        dependencies = [PREFIX]
-
     for key in content.keys():
-        if type(content[key]) in scalar_list and os.getenv(key) is not None:
-            content[key] = os.getenv(key)
+        if level == 0 or dependencies is None:
+            dependencies = []
+
+        env_key = gen_env_key(key, dependencies)
+        if type(content[key]) in scalar_list and os.getenv(env_key) is not None:
+            content[key] = os.getenv(env_key)
             print("yes str")
 
-        elif type(content[key]) == list:
-            print("yes list")
+        # 对象
         elif type(content[key]) == dict:
+            dependencies.append(key)
+            load_env_to_content(content[key], level=level + 1, dependencies=dependencies)
             print("yes dict")
+
+        # 基本类型数组
+        elif type(content[key]) == list and content[key][0] in scalar_list:
+            for i, v in enumerate(content[key]):
+                print(i, v)
+            print("yes list")
+
+        # 对象数组
+        elif type(content[key]) == list and type(content[key][0]) == dict:
+            print("yes list")
+
         print(key, type(content[key]), content[key])
 
 

@@ -2,3 +2,4 @@
 .vscode
 .vs
 venv
+test_local.py
