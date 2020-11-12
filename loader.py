@@ -18,9 +18,9 @@ scalar_list = [str, bool, int, float, None]
 # 添加环境变量用以测试
 os.environ["app_prop"] = "modified"
 os.environ["app_first__subv"] = "yet also modified"
-os.environ["app_arr[0]"] = "True"
-os.environ["app_arr[1]"] = "emmmmmm"
-os.environ["app_arr[2]"] = "kao"
+os.environ["app_arr0"] = "True"
+os.environ["app_arr1"] = "emmmmmm"
+os.environ["app_arr2"] = "kao"
 
 
 def gen_env_key(current, dependencies):
@@ -38,9 +38,9 @@ def gen_list_env_key(current, index, dependencies):
     if dependencies is None:
         dependencies = []
     if '__'.join(dependencies) == '':
-        return '{}_{}[{}]'.format(PREFIX, current, index).lstrip('_')
+        return '{}_{}{}'.format(PREFIX, current, index).lstrip('_')
     else:
-        return '{}_{}__{}[{}]'.format(PREFIX, '__'.join(dependencies), current, index).lstrip('_')
+        return '{}_{}__{}{}'.format(PREFIX, '__'.join(dependencies), current, index).lstrip('_')
 
 
 # load setting from env recursively
