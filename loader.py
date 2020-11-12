@@ -9,7 +9,7 @@ import yaml
 main_dir = os.path.split(os.path.realpath(__file__))[0]
 yaml_path = os.path.join(main_dir, "appsettings.yaml")
 
-PREFIX = "app"
+PREFIX = ""
 if len(sys.argv) > 1:
     PREFIX = sys.argv[1]
 
@@ -21,6 +21,19 @@ os.environ["app_first__subv"] = "yet also modified"
 os.environ["app_arr0"] = "True"
 os.environ["app_arr1"] = "emmmmmm"
 os.environ["app_arr2"] = "kao"
+
+os.environ["num"] = "noprefix_num"
+os.environ["str"] = "noprefix_str"
+os.environ["main__sub"] = "noprefix_main_ddd"
+os.environ["main__sub20"] = "？？"
+os.environ["main__sub21"] = "78390989"
+os.environ["arr0"] = "arr111"
+os.environ["arr1"] = "arr222"
+
+
+class IndentDumper(yaml.Dumper):
+    def increase_indent(self, flow=False, indentless=False):
+        return super(IndentDumper, self).increase_indent(flow, False)
 
 
 def gen_env_key(current, dependencies):
@@ -46,9 +59,6 @@ def gen_list_env_key(current, index, dependencies):
 # load setting from env recursively
 def load_env_to_content(content, level=0, dependencies=None):
     for key in content.keys():
-        if key == "arr":
-            print(777)
-
         if level == 0 or dependencies is None:
             dependencies = []
 
@@ -84,7 +94,7 @@ def convert_settings():
     load_env_to_content(content)
 
     with open(yaml_path, "w", encoding="utf-8") as f:
-        yaml.dump(content, f, allow_unicode=True, sort_keys=False)
+        yaml.dump(content, f, Dumper=IndentDumper, allow_unicode=True, sort_keys=False, indent=4)
 
 
 if __name__ == '__main__':
