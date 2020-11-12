@@ -1,3 +1,5 @@
+b: true
+decim: 233.222
 hobby:
 - 0
 - emm
@@ -6,4 +8,8 @@ main:
   sha: hi~
   sub:
     third: nono
-name: 中文
+n: None
+n2: null
+n3: null
+name: yttewqwwwwwwwwer
+num: 233
