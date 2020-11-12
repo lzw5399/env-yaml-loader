@@ -77,20 +77,11 @@ def load_env_to_content(content, level=0, dependencies=None):
         print(key, type(content[key]), content[key])
 
 
-def resort(content, exist_keys):
-    nc = {}
-    for key in exist_keys:
-        if key in content.keys():
-            nc[key] = content[key]
-    return nc
-
-
 def convert_settings():
     with open(yaml_path, "r", encoding="utf-8") as f:
         content = yaml.safe_load(f)
 
     load_env_to_content(content)
-    # content = resort(content, exist_keys)
 
     with open(yaml_path, "w", encoding="utf-8") as f:
         yaml.dump(content, f, allow_unicode=True, sort_keys=False)
