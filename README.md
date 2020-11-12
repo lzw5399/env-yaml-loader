@@ -4,12 +4,12 @@
 
 ## 调用方式
 ```shell
-python loader.py [xxx.yaml] [env-prefix]
+python env2yaml.py [xxx.yaml] [env-prefix]
 ```
 
 ## 调用示例
 ```shell
-python loader.py appsettings.yaml app
+python env2yaml.py appsettings.yaml app
 ```
 
 ## 示例规则
