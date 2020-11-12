@@ -6,29 +6,18 @@ import sys
 
 import yaml
 
+if len(sys.argv) < 2:
+    print("Must specify the YAML file path. e.g. python env2yaml.py appsettings.yaml")
+    exit(-1)
+
 main_dir = os.path.split(os.path.realpath(__file__))[0]
-yaml_path = os.path.join(main_dir, "appsettings.yaml")
+yaml_path = os.path.join(main_dir, sys.argv[1])
 
 PREFIX = ""
-if len(sys.argv) > 1:
-    PREFIX = sys.argv[1]
+if len(sys.argv) > 2:
+    PREFIX = sys.argv[2]
 
 scalar_list = [str, bool, int, float, None]
-
-# 添加环境变量用以测试
-os.environ["app_prop"] = "modified"
-os.environ["app_first__subv"] = "yet also modified"
-os.environ["app_arr0"] = "True"
-os.environ["app_arr1"] = "emmmmmm"
-os.environ["app_arr2"] = "kao"
-
-os.environ["num"] = "noprefix_num"
-os.environ["str"] = "noprefix_str"
-os.environ["main__sub"] = "noprefix_main_ddd"
-os.environ["main__sub20"] = "？？"
-os.environ["main__sub21"] = "78390989"
-os.environ["arr0"] = "arr111"
-os.environ["arr1"] = "arr222"
 
 
 class IndentDumper(yaml.Dumper):

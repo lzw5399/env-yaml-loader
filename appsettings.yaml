@@ -1,10 +1,10 @@
-num: noprefix_num
-str: noprefix_str
+num: ds
+str: we
 main:
-    sub: noprefix_main_ddd
+    sub: we
     sub2:
         - ？？
-        - '78390989'
+        - e
 arr:
-    - arr111
+    - ar2r111
     - arr222
