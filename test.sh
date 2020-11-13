@@ -15,3 +15,4 @@ export arr0=arr111
 export arr1=arr222
 
 python env2yaml.py appsettings.yaml
+echo "convert done"

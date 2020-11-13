@@ -7,7 +7,7 @@ import sys
 import yaml
 
 if len(sys.argv) < 2:
-    print("Must specify the YAML file path. e.g. python env2yaml.py appsettings.yaml")
+    print("Must specify the YAML file path. e.g. [ python env2yaml.py appsettings.yaml ]")
     exit(-1)
 
 main_dir = os.path.split(os.path.realpath(__file__))[0]
@@ -72,8 +72,6 @@ def load_env_to_content(content, level=0, dependencies=None):
         # 对象数组
         elif type(content[key]) == list and type(content[key][0]) == dict:
             print("yes list")
-
-        print(key, type(content[key]), content[key])
 
 
 def convert_settings():
